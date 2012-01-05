@@ -9,4 +9,5 @@ Gem::Specification.new do |s|
   s.files       = ['lib/vic.rb',
                    'lib/vic/colorscheme.rb',
                    'lib/vic/highlight.rb']
+  s.homepage    = 'https://github.com/noprompt/vic'
 end
