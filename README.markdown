@@ -89,5 +89,3 @@ Which will produce the highlights:
 
     hi Normal guifg=#333333 guibg=#ffffff
     hi rubyFunction guibg=#000000 gui=italic
-
-## Contribute
