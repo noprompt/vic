@@ -76,7 +76,7 @@ in the context of the Colorscheme object.
     end
 
 If you've ever written (or attempted to write) a Vim colorscheme, you may have
-added highlights for a specify language. To do this you prepend the language
+added highlights for a specific language. To do this you prepend the language
 name to the highlight group. In the case of Ruby your colorscheme might have
 highlight groups such as `rubyFunction`, `rubyBlock`, and so forth.
 
