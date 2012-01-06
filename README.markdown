@@ -25,6 +25,9 @@ Creating a new Vim colorscheme is, hopefully straight forward:
     # Create a new colorscheme
     scheme = Vic::Colorscheme.new 'Alligator'
 
+    # Add some information to the header of the file
+    scheme.info author: 'Joel Holdbrooks', URL: 'https://github.com/noprompt'
+
     # Set the background color (not necissary, see below)
     scheme.background = 'dark'
 
@@ -40,7 +43,8 @@ Creating a new Vim colorscheme is, hopefully straight forward:
 The above code will output:
 
     " Vim color file
-
+    " Author: Joel Holdbrooks
+    " URL: https://github.com/noprompt
     set background=dark
     hi clear
 
@@ -62,6 +66,11 @@ Alternatively, you can also write your colorscheme in a block which is evaluated
 in the context of the Colorscheme object.
 
     scheme = Vic::Colorscheme.new 'Alligator' do
+      info {
+        :author => 'Joel Holdbrooks',
+        :URL    => 'https://github.com/noprompt'
+      }
+
       hi 'Normal', guibg: '#333333', guifg: '#ffffff'
       # ...
     end
