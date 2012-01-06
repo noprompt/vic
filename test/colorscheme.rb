@@ -22,6 +22,13 @@ class ColorschemeTest < Test::Unit::TestCase
     assert_equal scheme.background!, 'light'
   end
 
+  def test_adds_and_returns_info
+    scheme = Vic::Colorscheme.new 'Alabama'
+    scheme.info[:author] = 'Joel Holdbrooks'
+    scheme.info[:homepage] = 'http://github.com/noprompt/vic'
+    assert scheme.info.is_a? Hash
+  end
+
   def test_prepends_language
     scheme = Vic::Colorscheme.new 'All Aboard'
     scheme.language :ruby do
@@ -32,10 +39,11 @@ class ColorschemeTest < Test::Unit::TestCase
 
   def test_writes_header
     scheme = Vic::Colorscheme.new 'Alanis Morissette'
+    scheme.info :author => 'Joel Holdbrooks'
     header =
       <<-EOT.gsub(/^ {6}/, '')
       " Vim color file
-
+      " Author: Joel Holdbrooks
       set background=dark
       hi clear
 

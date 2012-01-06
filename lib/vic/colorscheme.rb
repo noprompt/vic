@@ -7,6 +7,13 @@ module Vic
       instance_eval(&block) if block_given?
     end
 
+    # Adds info to the header of the scheme, or retrieves the info hash.
+    #
+    # @return [Hash,String]
+    def info(args={})
+      (@info ||= {}).merge!(args) if args.respond_to? :merge
+    end
+
     # Retrieves the background color.
     #
     # @return [String] 'light' or 'dark'
@@ -62,10 +69,13 @@ module Vic
       @language = nil
     end
 
+    # The colorscheme header
     def header
       <<-EOT.gsub(/^ {6}/, '')
       " Vim color file
-
+      #{info.to_a.map do |pair|
+        pair.join(": ").tap {|s| s[0] = '" ' + s[0].upcase }
+      end.join("\n")}
       set background=#{background}
       hi clear
 
@@ -77,6 +87,7 @@ module Vic
       EOT
     end
 
+    # Creates the colorscheme file
     def write
       [header, highlights.map {|h| h.write }].join("\n")
     end
