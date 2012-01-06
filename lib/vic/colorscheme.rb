@@ -1,4 +1,4 @@
-module Vim
+module Vic
   class Colorscheme
     attr_accessor :colors_name
 
@@ -37,6 +37,9 @@ module Vim
         end
     end
 
+    # Returns the set of highlights belonging the colorscheme
+    #
+    # @return[Array] the highlights
     def highlights
       @highlights ||= []
     end
@@ -59,7 +62,7 @@ module Vim
       @language = nil
     end
 
-    def colorscheme_header
+    def header
       <<-EOT.gsub(/^ {6}/, '')
       " Vim color file
 
@@ -75,7 +78,7 @@ module Vim
     end
 
     def write
-      [colorscheme_header, highlights.map {|h| h.write }].join("\n")
+      [header, highlights.map {|h| h.write }].join("\n")
     end
   end
 end

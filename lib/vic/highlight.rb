@@ -1,4 +1,4 @@
-module Vim
+module Vic
   class Highlight
     VALID_ARGS = {
       :normal_terminal => %w{term start stop},
