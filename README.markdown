@@ -97,4 +97,5 @@ which takes a block and automatically prepends the name for you.
 Which will produce the highlights:
 
     hi Normal guifg=#333333 guibg=#ffffff
-    hi rubyFunction guibg=#000000 gui=italic
+    hi rubyFunction gui=italic
+    hi rubyInstanceVariable guibg=#000000 gui=bold
