@@ -20,7 +20,7 @@ Require the file in your script or Gemfile:
     require 'vic'
     gem 'vic', '~> 0.0.3'
 
-Creating a new Vim colorscheme is, hopefully straight forward:
+Creating a new Vim colorscheme is, hopefully, straight forward:
 
     # Create a new colorscheme
     scheme = Vic::Colorscheme.new 'Alligator'
