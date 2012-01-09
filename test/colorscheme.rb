@@ -1,18 +1,17 @@
 $:.unshift File.expand_path('../../lib', __FILE__)
-require 'vic/colorscheme'
-require 'vic/highlight'
+require 'vic'
 require 'test/unit'
 
 class ColorschemeTest < Test::Unit::TestCase
-  def test_sets_background
-    scheme = Vic::Colorscheme.new 'Alligator'
-    assert_equal scheme.background, 'dark'
-  end
-
   def test_adds_a_hightlight
     scheme = Vic::Colorscheme.new 'Allan Jackson'
     scheme.hi 'Normal', :guibg => '#333333', :guifg => '#ffffff'
-    assert_equal scheme.highlights.pop.class, Vic::Highlight
+    assert_equal scheme.highlights.first.class, Vic::Colorscheme::Highlight
+  end
+
+  def test_sets_background
+    scheme = Vic::Colorscheme.new 'Alligator'
+    assert_equal scheme.background, 'dark'
   end
 
   def test_updates_background
@@ -32,9 +31,9 @@ class ColorschemeTest < Test::Unit::TestCase
   def test_prepends_language
     scheme = Vic::Colorscheme.new 'All Aboard'
     scheme.language :ruby do
-      scheme.hi 'Function', gui: 'bold'
+      hi 'Function', gui: 'bold'
     end
-    assert_equal scheme.highlights.pop.group_name, 'rubyFunction'
+    assert_equal scheme.highlights.first.group, 'rubyFunction'
   end
 
   def test_writes_header
@@ -72,7 +71,7 @@ class ColorschemeTest < Test::Unit::TestCase
 
       let g:colors_name="Alan Parsons Project"
 
-      hi Normal guifg=#ffffff guibg=#333333
+      hi Normal guibg=#333333 guifg=#ffffff
       EOT
     assert_equal scheme.write, expected_output
   end

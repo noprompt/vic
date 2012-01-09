@@ -1,8 +1,9 @@
+$:.unshift File.expand_path('../../lib', __FILE__)
+require 'vic'
 require 'test/unit'
-require File.expand_path('../../lib/vic.rb', __FILE__)
 
 class VersionTest < Test::Unit::TestCase
   def test_version
-    assert Vic::VERSION
+    assert_equal Vic::VERSION, '0.0.3'
   end
 end
