@@ -1,20 +1,31 @@
 module Vic
   class Colorscheme
-    attr_accessor :colors_name
+    attr_accessor :colors_name, :information
 
+    # A new instance of Colorscheme. If a block is given with no arguments, the
+    # the block will be evaluated in the context of the new colorscheme.
+    # Otherwise the block will yield self.
+    #
+    # @param [String] colors_name the name of the colorscheme
+    # @param [Proc] block the block to be evaluated
+    # @return [Colorscheme]
     def initialize(colors_name, &block)
       @colors_name = colors_name
-      instance_eval(&block) if block_given?
+      if block_given?
+        block.arity == 0 ? instance_eval(&block) : yield(self)
+      end
     end
 
-    # Adds info to the header of the scheme, or retrieves the info hash.
+    # Returns/sets the information attribute
     #
-    # @return [Hash,String]
-    def info(args={})
-      (@info ||= {}).merge!(args) if args.respond_to? :merge
+    # @param [Hash] information the information, :author => 'Joel Holdbrooks'
+    # @return [Hash]
+    def information(inf={})
+      (@information ||= {}).merge!(inf) if inf.respond_to? :merge
     end
+    alias_method :info, :information
 
-    # Retrieves the background color.
+    # Returns the background color.
     #
     # @return [String] 'light' or 'dark'
     def background
@@ -36,7 +47,7 @@ module Vic
     # @return[String] the background attribute
     def background!
       @background =
-        if (normal = highlights.select {|h| h.group_name == 'Normal'}.first)
+        if normal = highlights.find_by_group('Normal')
           return 'dark' unless color = normal.guibg
           color.partition('#').last.to_i(16) <= 8421504 ? 'dark' : 'light'
         else
@@ -44,32 +55,68 @@ module Vic
         end
     end
 
-    # Returns the set of highlights belonging the colorscheme
-    #
-    # @return[Array] the highlights
-    def highlights
-      @highlights ||= []
+    # Returns the set of highlights for the colorscheme
+    def highlight_set
+      @highlight_set ||= HighlightSet.new
     end
+    alias_method :highlights, :highlight_set
 
-    # Proxy method for `Vim::Highlight#new`. If inside of a language block the
-    # langauge name is automatcially prepended to the group name of the new
-    # highlight.
+    # Creates a new highlight or updates one if it exists.
     #
-    # @see Vim::Highlight
-    # @return [Vim::Highlight] the new highlight
-    def highlight(group_name, args={}, &block)
-      group_name = "#{@language}#{group_name}" if @language
-      highlights.push(Highlight.new group_name, args, &block).first
+    # If inside of a language block the langauge name is automatcially prepended
+    # to the group name of the new highlight.
+    #
+    # @see Vic::Highlight
+    # @return [Vic::Highlight] the new highlight
+    def highlight(group, args={})
+      hilight = highlight_set.find_by_group(group)
+      no_args = args.empty?
+
+      if not hilight and no_args
+        return
+      elsif hilight and no_args
+        return hilight
+      elsif hilight
+        hilight.update_arguments!(args)
+      else
+        hilight = Highlight.new("#{language}#{group}", args)
+        highlight_set.add(hilight)
+      end
+
+      hilight
     end
     alias_method :hi, :highlight
 
-    def language(name, &block)
+    # Sets the current language to name. Any new highlights created will have
+    # the language name automatically prepended.
+    #
+    # @return [String] the new language name
+    def language=(name)
       @language = name
-      yield if block_given?
-      @language = nil
     end
 
-    # The colorscheme header
+    # Returns the current language or temporarily sets the language to name if
+    # a block is given. If a block is given with no arguments, it will be
+    # evaluated in the context of the colorscheme, otherwise it will yield the
+    # colorscheme.
+    #
+    # @param [String,Symbol] name the name of the language
+    # @param [Proc] block the block to be evalauted
+    # @return [String] the current language
+    def language(name=nil, &block)
+      if @language and not name
+        return @language
+      elsif name and block_given?
+        previous_language = self.language
+        self.language = name
+        block.arity == 0 ? instance_eval(&block) : yield(self)
+        self.language = previous_language
+      end
+    end
+
+    # Returns the colorscheme header.
+    #
+    # @return [String] the colorscheme header
     def header
       <<-EOT.gsub(/^ {6}/, '')
       " Vim color file
@@ -87,9 +134,11 @@ module Vic
       EOT
     end
 
-    # Creates the colorscheme file
+    # Returns the colorscheme as a string
+    #
+    # @return [String] the colorscheme
     def write
-      [header, highlights.map {|h| h.write }].join("\n")
+      [header, highlights.map(&:write)].join("\n")
     end
   end
 end
