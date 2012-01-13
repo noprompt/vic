@@ -13,28 +13,24 @@ module Vic
       update_arguments!(args)
     end
 
-    # Returns and/or sets an argument for the current highlight.
-    #
-    # @param [String,Symbol] the argument key
-    # @param [String,Array,nil] the values to assign to the argument key
-    # @return [String,Symbol,Array,nil] the value of the argument key
-    def method_missing(key, *args)
-      super unless key =~ (/([a-z]+)=?/) and Argument.is_valid?($1)
-      lookup   = $1.to_s
-      argument = argument_set.find_by_key(lookup)
-      args     = args.first if args.first.respond_to? :chr
-
-      if not argument and args.empty?
-        return
-      elsif argument and not args.empty?
-        argument.arg = args
-      elsif argument and args.empty?
-        return argument.arg
-      elsif not args.empty?
-        argument = Argument.new(lookup, args)
-        arguments.add argument
+    # Sets the methods term, term=, start, start=, etc. for settings arguments.
+    self.class_eval do
+      %w{term start stop cterm ctermfg ctermbg gui guibg guifg}.each do |m|
+        define_method(m) {
+          argument = argument_set.find_by_key(m)
+          return argument.arg if argument
+        }
+        define_method("#{m}=") {|val|
+          argument = argument_set.find_by_key(m)
+          if argument
+            argument.arg = val
+          else
+            argument = Argument.new(m, val)
+            argument_set.add argument
+          end
+          val
+        }
       end
-      argument.arg
     end
 
     # Updates/sets the current highlight's arguments.
