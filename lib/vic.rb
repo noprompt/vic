@@ -1,9 +1,8 @@
-require 'set'
-
 module Vic
-  VERSION = '0.0.3'
+  VERSION = '0.0.4'
 end
 
+require 'set'
 require 'vic/colorscheme'
 require 'vic/colorscheme/highlight'
 require 'vic/colorscheme/highlight_set'
