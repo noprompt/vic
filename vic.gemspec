@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'vic'
-  s.version     = '0.0.4'
+  s.version     = '0.0.5'
   s.date        = '2012-01-13'
   s.summary     = 'Create Vim colorschemes'
   s.description = 'Create Vim colorschemes with Ruby'

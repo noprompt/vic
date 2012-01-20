@@ -1,12 +1,22 @@
 module Vic
-  class Colorscheme::Highlight::ArgumentSet < Set
+  class Colorscheme::Highlight::ArgumentSet
+    include Enumerable
+
+    def arguments
+      @arguments ||= []
+    end
+
+    def each
+      arguments.each {|a| yield a }
+    end
+
     # Adds a new argument to the set
     #
     # @param [Colorscheme::Highlight::Argument] argument the argument to add
     # @return [Colorscheme::Highlight::ArgumentSet] the new set of arguments
     def add(argument)
       if argument.respond_to? :arg
-        super(argument)
+        arguments.push argument
       else
         # Raise an Exception
       end

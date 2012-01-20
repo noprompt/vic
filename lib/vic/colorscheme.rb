@@ -72,8 +72,16 @@ module Vic
       hilight = highlight_set.find_by_group(group)
       no_args = args.empty?
 
+      # If the highlight doesn't exist no args were passed, create the 
+      # highlight. This enables more flexible syntax for situations where you
+      # may need to create or update a highlight using this syntax:
+      #
+      #   `hi('Normal').gui('bold')
+      #
+      # If a highlight has no arguments it isn't rendered.
       if not hilight and no_args
-        return
+        hilight = Highlight.new("#{language}#{group}")
+        highlight_set.add(hilight)
       elsif hilight and no_args
         return hilight
       elsif hilight

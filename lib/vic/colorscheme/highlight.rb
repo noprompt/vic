@@ -54,7 +54,7 @@ module Vic
     #
     # @return [String] the highlight as a string
     def write
-      "hi #{group} #{arguments.sort_by_key.map(&:write).join(' ')}"
+      "hi #{group} #{arguments.sort_by_key.map(&:write).compact.join(' ')}"
     end
   end
 end
