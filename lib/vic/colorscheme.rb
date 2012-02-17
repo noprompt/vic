@@ -72,7 +72,7 @@ module Vic
       hilight = highlight_set.find_by_group(group)
       no_args = args.empty?
 
-      # If the highlight doesn't exist no args were passed, create the 
+      # If the highlight doesn't exist or no args were passed, create the
       # highlight. This enables more flexible syntax for situations where you
       # may need to create or update a highlight using this syntax:
       #
