@@ -7,6 +7,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Joel Holdbrooks']
   s.email       = 'cjholdbrooks@gmail.com'
   s.files       = ['lib/vic.rb',
+                   'lib/vic/color.rb',
+                   'lib/vic/color_error.rb',
                    'lib/vic/colorscheme.rb',
                    'lib/vic/colorscheme/highlight.rb',
                    'lib/vic/colorscheme/highlight_set.rb',
