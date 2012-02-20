@@ -13,7 +13,7 @@ module Vic
     # @return [String,nil] the string if argument has been set
     def write
       return unless val
-      "#{key}=" + (val.respond_to?(:join) ? val.join(',') : val)
+      "#{key}=#{val.respond_to?(:join) ? val.join(',') : val}"
     end
 
     # Checks if `key` is valid vim key for an argument

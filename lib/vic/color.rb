@@ -58,13 +58,17 @@ module Vic
       # If it is we'll determine the closest match, change it's value, break,
       # and move on to the next part.
       parts.map! do |part|
-        (0..(increments.length - 1)).each do |i|
-          smaller, bigger = increments[i], increments[i + 1]
-          next unless (smaller <= part) && (part <= bigger)
-          s = (smaller - part).abs
-          b = (bigger - part).abs
-          return s < b ? smaller : bigger
+        closest = nil
+        for i in (0..(increments.length - 1))
+          lower = increments[i]
+          upper = increments[i + 1]
+          next unless (lower <= part) && (part <= upper)
+          distance_from_lower = (lower - part).abs
+          distance_from_upper = (upper - part).abs
+          closest = distance_from_lower < distance_from_upper ? lower : upper
+          break
         end
+        closest
       end
 
       # Return the index of the color
