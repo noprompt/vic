@@ -80,7 +80,7 @@ module Vic
     # @param [String] subject the string in question
     # @return [Match
     def hex_color?(subject)
-      subject.match(/#[\da-f]{6}/) ? true : false
+      subject.match(/#[\da-f]{6}/i) ? true : false
     end
   end
 end
