@@ -78,7 +78,7 @@ module Vic
       #
       #   `hi('Normal').gui('bold')
       #
-      # If a highlight has no arguments it isn't rendered.
+      # Note: If a highlight has no arguments it isn't rendered.
       if not hilight and no_args
         hilight = Highlight.new("#{language}#{group}")
         highlight_set.add(hilight)

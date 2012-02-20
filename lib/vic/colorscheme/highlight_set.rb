@@ -15,10 +15,11 @@ module Vic
     # @param [Colorscheme::Highlight] highlight the highlight to add
     # @return [Colorscheme::HighlightSet] the updated set of highlights
     def add(highlight)
-      if highlight.respond_to? :gui 
-        highlights.push highlight 
+      if highlight.respond_to? :gui
+        highlights.push highlight
       else
         # Raise and Exception
+        raise TypeError.new("expected type Colorscheme::Vic::Highlight")
       end
     end
 

@@ -15,10 +15,11 @@ module Vic
     # @param [Colorscheme::Highlight::Argument] argument the argument to add
     # @return [Colorscheme::Highlight::ArgumentSet] the new set of arguments
     def add(argument)
-      if argument.respond_to? :arg
+      if argument.respond_to? :val
         arguments.push argument
       else
         # Raise an Exception
+        raise TypeError.new("expted type Colorscheme::Highlight::Argument")
       end
     end
 
@@ -34,7 +35,7 @@ module Vic
     #
     # @return [Colorscheme::Highlight::ArgumentSet] the sorted set of arguments
     def sort_by_key
-      sort {|a, b| a.key <=> b.key}
+      sort {|a, b| a.key.to_s <=> b.key.to_s }
     end
   end
 end

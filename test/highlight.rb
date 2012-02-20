@@ -11,4 +11,11 @@ class HighlightTest < Test::Unit::TestCase
       assert_respond_to highlight, "#{arg}="
     end
   end
+
+  def test_raises_a_type_error_for_arguments
+    highlight = Vic::Colorscheme::Highlight.new('Normal')
+    assert_raise TypeError do
+      highlight.arguments.add 'Soda'
+    end
+  end
 end

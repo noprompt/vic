@@ -82,4 +82,12 @@ class ColorschemeTest < Test::Unit::TestCase
       EOT
     assert_equal scheme.write, expected_output
   end
+
+  def test_raises_a_type_error_for_highlights
+    scheme = Vic::Colorscheme.new 'Amelia!'
+
+    assert_raise TypeError do
+      scheme.highlights.add 'Plane Crash'
+    end
+  end
 end

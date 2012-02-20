@@ -2,18 +2,18 @@ module Vic
   class Colorscheme::Highlight::Argument
     VALID = %w{term start stop cterm ctermfg ctermbg gui guifg guibg guisp font}
 
-    attr_accessor :key, :arg
+    attr_accessor :key, :val
 
-    def initialize(key, arg)
-      @key, @arg = key, arg
+    def initialize(key, val)
+      @key, @val = key, val
     end
 
     # The argument as a string
     #
     # @return [String,nil] the string if argument has been set
     def write
-      return unless arg
-      "#{key}=#{arg.respond_to?(:join) ? arg.join(',') : arg}"
+      return unless val
+      "#{key}=" + (val.respond_to?(:join) ? val.join(',') : val)
     end
 
     # Checks if `key` is valid vim key for an argument
