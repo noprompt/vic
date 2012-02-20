@@ -25,8 +25,8 @@ module Vic
 
     # Find a highlight by group name
     #
-    # @params [String] group the group name
-    # @retrun [Colorscheme::Highlight,nil] the highlight
+    # @param [String] group the group name
+    # @return [Colorscheme::Highlight,nil] the highlight
     def find_by_group(group)
       find {|h| h.group == group }
     end
