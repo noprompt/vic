@@ -112,7 +112,7 @@ counterpart. Consider this example:
 
 Unless you are writing a color scheme generator or just prefer Ruby code to
 everything else, using Vic in this manor is almost pointless. Since version
-\0.0.5 the `fg` and `bg` attributes/methods are available to highlights. So
+0.0.5 the `fg` and `bg` attributes/methods are available to highlights. So
 this:
 
       hi 'Normal', fg: '#333333', bg: '#ffffff'
