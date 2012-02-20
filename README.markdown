@@ -77,13 +77,44 @@ evaluated in the context of the Colorscheme object.
 
 ## Shortcuts
 
+Let's be honest, building a color scheme in Vim is a pain in the ass. Vic
+attempts to dry things up and allow the theme developer to focus on what's
+really important - building a great theme without going bat shit crazy.
+
+### Automatic color conversion
+
+When it comes to handcrafting color schemes in Vim, a notable annoyance is
+converting hexadecimal colors to their 256 color counterpart. Sure, there are
+fabulous tools like [CSApprox](http://www.vim.org/scripts/script.php?script_id=2390)
+which will do the dirty work for you, but why introduce dependencies or make
+Vim do more work?
+
+Consider this example:
+
+      hi 'Normal', ctermbg: 59, ctermfg: 15, guifg: '#333333', guibg: '#ffffff'
+
+Now, unless you are writing a color scheme generator or just prefer Ruby code to
+everything else, using Vic in this manor is almost pointless. Since version
+0.0.5 the `fg` and `bg` attributes/methods are available to highlights. So
+this:
+
+      hi 'Normal', fg: '#333333', bg: '#ffffff'
+
+Produces this:
+
+      hi Normal ctermbg=59 ctermfg=15 guibg=#333333 guifg=#ffffff
+
+Much better, right? Of course it is! But you can be verbose if need be.
+
+### Languages
+
 If you've ever written (or attempted to write) a Vim color scheme, you may have
 added highlights for a specific language. To do this you prepend the language
 name to the highlight group. In the case of Ruby your color scheme might have
 highlight groups such as `rubyFunction`, `rubyBlock`, and so forth.
 
-To clean things up the `Vic::Colorscheme` object provides the method language
-which takes a block and automatically prepends the name for you.
+To clean things up the `Vic::Colorscheme` object provides the method `language`
+which takes a block and automatically prepends the language name for you.
 
     scheme = Vic::Colorscheme.new 'Amos Moses' do
       hi 'Normal', guifg: '#333333', guibg: '#ffffff'
@@ -102,23 +133,10 @@ Which will produce the highlights:
     hi rubyFunction gui=italic
     hi rubyInstanceVariable guibg=#000000 gui=bold
 
-### Automatic color conversion
+Cool!
 
-Another hassle when it comes to handcrafting color schemes in Vim, is dealing
-with the annoyance of converting hexadecimal colors to their 256 color
-counterpart. Consider this example:
+## Thanks
 
-      hi 'Normal', ctermbg: 59, ctermfg: 15, guifg: '#333333', guibg: '#ffffff'
-
-Unless you are writing a color scheme generator or just prefer Ruby code to
-everything else, using Vic in this manor is almost pointless. Since version
-0.0.5 the `fg` and `bg` attributes/methods are available to highlights. So
-this:
-
-      hi 'Normal', fg: '#333333', bg: '#ffffff'
-
-Produces this:
-
-      hi Normal ctermbg=59 ctermfg=15 guibg=#333333 guifg=#ffffff
-
-Of course you can still be verbose if need be.
+I'd like to thank [Micheal Elliot](https://github.com/MicahElliott) for his
+[awesome gist](https://gist.github.com/719710) showing how to convert RGB
+hexadecimal values to xterm-256 color codes!
