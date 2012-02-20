@@ -1,6 +1,6 @@
 # Vic
 
-Vic lets you create Vim colorschemes in Ruby.
+Vic lets you create Vim color schemes in Ruby.
 
 ## About
 
@@ -9,7 +9,7 @@ several key features, but at the moment gets the job done.
 
 ## Installation
 
-Vic is available as a Rubygem:
+Vic is available as a Ruby gem:
 
     $ gem install vic
 
@@ -20,7 +20,7 @@ Require the file in your script or Gemfile:
     require 'vic'
     gem 'vic', '~> 0.0.5'
 
-Creating a new Vim colorscheme is, hopefully, straight forward:
+Creating a new Vim color scheme is, hopefully, straight forward:
 
     # Create a new colorscheme
     scheme = Vic::Colorscheme.new 'Alligator'
@@ -32,7 +32,7 @@ Creating a new Vim colorscheme is, hopefully, straight forward:
     scheme.background = 'dark'
 
     # Add some highlights
-    scheme.highlight 'Normal', guibg: '#33333', guifg: '#ffffff'
+    scheme.highlight 'Normal', guibg: '#333333', guifg: '#ffffff'
 
     # You can also use the shorthand `hi`
     scheme.hi 'Function', guifg: '#ffffff', gui: 'bold'
@@ -62,8 +62,8 @@ explicitly. Vic will attempt to determine the background setting from the
 `Normal` highlight group's `guibg` value (if it exists). Otherwise Vic
 automatically sets the background value to `dark`.
 
-Alternatively, you can also write your colorscheme in a block which is evaluated
-in the context of the Colorscheme object.
+Alternatively, you can also write your color scheme in a block which is
+evaluated in the context of the Colorscheme object.
 
     scheme = Vic::Colorscheme.new 'Alligator' do
       info {
@@ -75,9 +75,11 @@ in the context of the Colorscheme object.
       # ...
     end
 
-If you've ever written (or attempted to write) a Vim colorscheme, you may have
+## Shortcuts
+
+If you've ever written (or attempted to write) a Vim color scheme, you may have
 added highlights for a specific language. To do this you prepend the language
-name to the highlight group. In the case of Ruby your colorscheme might have
+name to the highlight group. In the case of Ruby your color scheme might have
 highlight groups such as `rubyFunction`, `rubyBlock`, and so forth.
 
 To clean things up the `Vic::Colorscheme` object provides the method language
@@ -99,3 +101,24 @@ Which will produce the highlights:
     hi Normal guifg=#333333 guibg=#ffffff
     hi rubyFunction gui=italic
     hi rubyInstanceVariable guibg=#000000 gui=bold
+
+### Automatic color conversion
+
+Another hassle when it comes to handcrafting color schemes in Vim, is dealing
+with the annoyance of converting hexadecimal colors to their 256 color
+counterpart. Consider this example:
+
+      hi 'Normal', ctermbg: 59, ctermfg: 15, guifg: '#333333', guibg: '#ffffff'
+
+Unless you are writing a color scheme generator or just prefer Ruby code to
+everything else, using Vic in this manor is almost pointless. Since version
+\0.0.5 the `fg` and `bg` attributes/methods are available to highlights. So
+this:
+
+      hi 'Normal', fg: '#333333', bg: '#ffffff'
+
+Produces this:
+
+      hi Normal ctermbg=59 ctermfg=15 guibg=#333333 guifg=#ffffff
+
+Of course you can still be verbose if need be.
