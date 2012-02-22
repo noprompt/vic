@@ -35,9 +35,6 @@ module Vic
             arg = Argument.new(m, val)
             argument_set.add arg
           end
-
-          # Return self for chaining
-          self
         end
       end
     end
@@ -49,9 +46,6 @@ module Vic
     def fg=(hex)
       self.guifg = hex
       self.ctermfg = Color.hex_to_256(hex)
-
-      # Return self for chaining
-      self
     end
 
     # Sets guibg and ctermbg simultaneously. `hex` is automatically converted to
@@ -59,9 +53,6 @@ module Vic
     def bg=(hex)
       self.guibg = hex
       self.ctermbg = Color.hex_to_256(hex)
-
-      # Return self for chaining
-      self
     end
 
     # Updates/sets the current highlight's arguments.
