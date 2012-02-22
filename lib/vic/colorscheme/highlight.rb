@@ -11,7 +11,8 @@ module Vic
     # @param [Hash] args the arguments to set
     # @return [Vic::Colorscheme::Highlight] the new highlight
     def initialize(group, args={})
-      @group = group
+      # Convert to group name to symbol to ensure consistency
+      @group = group.to_sym
       update_arguments!(args)
     end
 
