@@ -6,7 +6,7 @@ class ColorschemeTest < Test::Unit::TestCase
   def test_adds_a_hightlight
     scheme = Vic::Colorscheme.new 'Allan Jackson'
     scheme.hi 'Normal', :guibg => '#333333', :guifg => '#ffffff'
-    assert_kind_of Vic::Colorscheme::Highlight, scheme.hi('Normal')
+    assert_kind_of Vic::Colorscheme::Highlight, scheme.find_highlight('Normal')
   end
 
   def test_sets_background
@@ -39,8 +39,8 @@ class ColorschemeTest < Test::Unit::TestCase
         hi 'String', gui: 'italic'
       end
     end
-    assert scheme.hi('rubyFunction')
-    assert scheme.hi('pythonString')
+    assert scheme.find_highlight('rubyFunction')
+    assert scheme.find_highlight('pythonString')
   end
 
   def test_writes_header
