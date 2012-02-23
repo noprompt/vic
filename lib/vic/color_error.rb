@@ -1,7 +1,7 @@
 module Vic
   class ColorError < StandardError
-    def initialize
-      super('invalid color')
+    def initialize(message)
+      super(message)
     end
   end
 end

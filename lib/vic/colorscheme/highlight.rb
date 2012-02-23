@@ -1,6 +1,5 @@
 module Vic
   class Colorscheme::Highlight
-    include Vic::Color
 
     attr_accessor :group
 
@@ -43,16 +42,32 @@ module Vic
     # the 256 color code for ctermfg.
     #
     # @param [String] hex a hexidecimal color
-    def fg=(hex)
-      self.guifg = hex
-      self.ctermfg = Color.hex_to_256(hex)
+    def fg=(color)
+      if color == 'NONE'
+        self.ctermfg = color
+      elsif Color.is_hexadecimal?(color)
+        self.ctermfg = Color.hex_to_256(color)
+      else
+        raise ColorError.new "invalid hexadecimal color #{color}"
+      end
+
+      self.guifg = color
     end
 
     # Sets guibg and ctermbg simultaneously. `hex` is automatically converted to
     # the 256 color code for ctermbg.
-    def bg=(hex)
-      self.guibg = hex
-      self.ctermbg = Color.hex_to_256(hex)
+    #
+    # @param [String] hex a hexidecimal color
+    def bg=(color)
+      if color == 'NONE'
+        self.ctermbg = color
+      elsif Color.is_hexadecimal?(color)
+        self.ctermbg = Color.hex_to_256(color)
+      else
+        raise ColorError.new "invalid hexadecimal color #{color}"
+      end
+
+      self.guibg = color
     end
 
     # Updates/sets the current highlight's arguments.

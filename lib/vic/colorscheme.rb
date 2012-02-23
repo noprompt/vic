@@ -61,7 +61,7 @@ module Vic
     end
     alias_method :highlights, :highlight_set
 
-    # Creates a new highlight or updates one if it exists.
+    # Creates a new highlight
     #
     # If inside of a language block the langauge name is automatcially prepended
     # to the group name of the new highlight.
@@ -69,31 +69,20 @@ module Vic
     # @see Vic::Highlight
     # @return [Vic::Highlight] the new highlight
     def highlight(group, args={})
-      hilight = highlight_set.find_by_group(group)
-      no_args = args.empty?
+      return if args.empty?
 
-      # If the highlight doesn't exist or no args were passed, create the
-      # highlight. This enables more flexible syntax for situations where you
-      # may need to create or update a highlight using this syntax:
-      #
-      #   `hi('Normal').gui('bold')
-      #
-      # Note: If a highlight has no arguments it isn't rendered.
-      if not hilight and no_args
-        hilight = Highlight.new("#{language}#{group}")
-        highlight_set.add(hilight)
-      elsif hilight and no_args
-        return hilight
-      elsif hilight
-        hilight.update_arguments!(args)
+      if h = find_highlight(group)
+        h.update_arguments! args
       else
-        hilight = Highlight.new("#{language}#{group}", args)
-        highlight_set.add(hilight)
+        h = Highlight.new "#{language}#{group}", args
+        highlight_set.add h
       end
-
-      hilight
     end
     alias_method :hi, :highlight
+
+    def find_highlight(group)
+      highlight_set.find_by_group(group)
+    end
 
     # Sets the current language to name. Any new highlights created will have
     # the language name automatically prepended.
