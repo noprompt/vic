@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'vic'
-  s.version     = '0.0.5'
-  s.date        = '2012-01-13'
+  s.version     = '0.0.6'
+  s.date        = Time.now.strftime("%Y-%m-%d")
   s.summary     = 'Create Vim colorschemes'
   s.description = 'Create Vim colorschemes with Ruby'
   s.authors     = ['Joel Holdbrooks']

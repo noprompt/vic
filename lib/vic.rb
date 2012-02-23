@@ -1,5 +1,5 @@
 module Vic
-  VERSION = '0.0.5'
+  VERSION = '0.0.6'
 end
 
 require 'vic/color'

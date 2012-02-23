@@ -18,7 +18,7 @@ Vic is available as a Ruby gem:
 Require the file in your script or Gemfile:
 
     require 'vic'
-    gem 'vic', '~> 0.0.5'
+    gem 'vic', '~> 0.0.6'
 
 Creating a new Vim color scheme is, hopefully, straight forward:
 

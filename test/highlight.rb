@@ -18,4 +18,12 @@ class HighlightTest < Test::Unit::TestCase
       highlight.arguments.add 'Soda'
     end
   end
+
+  def test_rasies_a_color_error
+    highlight = Vic::Colorscheme::Highlight.new('Normal')
+    assert_raise Vic::ColorError do
+      highlight.fg = 'Toast'
+      highlight.bg = 'Beans'
+    end
+  end
 end
