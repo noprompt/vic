@@ -1,11 +1,14 @@
 # Vic
 
-Vic lets you create Vim color schemes in Ruby.
+Vic, short for Vim color scheme, gives you the power of Grayskull to create Vim
+color schemes with Ruby! Yay!
 
-## About
+If Vic was a gun these would be the bullets:
 
-This library is (obviously) in it's early stages of development. It's missing
-several key features, but at the moment gets the job done.
+  * Flexible usage and fine-grained control
+  * Nifty shortcuts
+  * Accurately converts hexadecimal to xterm256-color for cterm
+  * Outside of Ruby 1.9.2+ it's dependency freeee with four e's!
 
 ## Installation
 
@@ -134,6 +137,10 @@ Which will produce the highlights:
     hi rubyInstanceVariable guibg=#000000 gui=bold
 
 Cool!
+
+## Contributing
+
+Please, please, please feel free to fork, patch, and/or point out any bad code.
 
 ## Thanks
 
