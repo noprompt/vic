@@ -25,36 +25,34 @@ module Vic
     end
     alias_method :info, :information
 
-    # Returns the background color.
+    # Returns the background setting.
     #
     # @return [String] 'light' or 'dark'
     def background
       @background ||= background!
     end
 
-    # Sets the background color.
+    # Sets the background.
     #
     # @param [String] a value of 'light' or 'dark'
     # @return [String] the background attribute
     def background=(setting)
-      if setting =~ /^light$|^dark$/
-        @background = setting
-      else
+      unless setting =~ /^light$|^dark$/
         raise "background setting must be either 'light' or 'dark'"
       end
+      @background = setting
     end
 
-    # Sets the background color by attempting to determine it.
+    # Sets the background by attempting to determine it.
     #
     # @return[String] the background attribute
     def background!
-      @background =
-        if normal = highlights.find_by_group('Normal')
-          return 'dark' unless color = normal.guibg
-          color.partition('#').last.to_i(16) <= 8421504 ? 'dark' : 'light'
-        else
-          'dark'
-        end
+      normal = highlights.find_by_group 'Normal'
+      unless normal && normal.guibg
+        return @background = 'dark'
+      end
+      hex = normal.guibg.match(/[a-f0-9]{6}/i)[0]
+      @background = hex.to_i(16) <= 8421504 ? 'dark' : 'light'
     end
 
     # Returns the set of highlights for the colorscheme
