@@ -18,7 +18,6 @@ module Vic
     # Sets the methods term, term=, start, start=, etc. for settings arguments.
     self.class_eval do
       %w{term start stop cterm ctermfg ctermbg gui guifg guibg}.each do |m|
-
         # Getter method
         define_method(m) do
           arg = argument_set.find_by_key(m)
@@ -50,7 +49,6 @@ module Vic
       else
         raise ColorError.new "invalid hexadecimal color #{color}"
       end
-
       self.guifg = color
     end
 
@@ -66,7 +64,6 @@ module Vic
       else
         raise ColorError.new "invalid hexadecimal color #{color}"
       end
-
       self.guibg = color
     end
 
