@@ -13,7 +13,7 @@ class VersionTest < Test::Unit::TestCase
   end
 
   def test_readme_version_matches_vic_version
-    vic_gemspec_version = File.read('README.markdown').match(/(\d\.\d\.\d)/)[0]
-    assert_equal Vic::VERSION, vic_gemspec_version
+    File.read('README.markdown').match(/'~> (\d\.\d\.\d)'/)
+    assert_equal Vic::VERSION, $1
   end
 end
