@@ -56,10 +56,9 @@ module Vic
     end
 
     # Returns the set of highlights for the colorscheme
-    def highlight_set
-      @highlight_set ||= HighlightSet.new
+    def highlights
+      @highlights ||= HighlightSet.new
     end
-    alias_method :highlights, :highlight_set
 
     # Creates a new highlight
     #
@@ -75,13 +74,13 @@ module Vic
         h.update_arguments! args
       else
         h = Highlight.new "#{language}#{group}", args
-        highlight_set.add h
+        highlights.add h
       end
     end
     alias_method :hi, :highlight
 
     def find_highlight(group)
-      highlight_set.find_by_group(group)
+      highlights.find_by_group(group)
     end
 
     # Sets the current language to name. Any new highlights created will have
