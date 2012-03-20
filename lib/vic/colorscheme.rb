@@ -79,6 +79,10 @@ module Vic
     end
     alias_method :hi, :highlight
 
+    # Finds a highlight and returns it.
+    #
+    # @param [String,Symbol] the highlight group
+    # @return [Vic::Highlight,NilClass] the found highlight name
     def find_highlight(group)
       highlights.find_by_group(group)
     end
