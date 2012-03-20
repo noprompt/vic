@@ -43,7 +43,7 @@ module Vic
     #
     # @param [String] hex a hexidecimal color
     def fg=(color)
-      if color == 'NONE'
+      if color =~ /none/i
         self.ctermfg = color
       elsif Color.is_hexadecimal?(color)
         self.ctermfg = Color.hex_to_256(color)
@@ -59,8 +59,8 @@ module Vic
     #
     # @param [String] hex a hexidecimal color
     def bg=(color)
-      if color == 'NONE'
-        self.ctermbg = color
+      if color =~ /none/i
+        self.ctermbg = color.upcase
       elsif Color.is_hexadecimal?(color)
         self.ctermbg = Color.hex_to_256(color)
       else
