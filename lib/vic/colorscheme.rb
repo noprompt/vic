@@ -1,16 +1,16 @@
 module Vic
   class Colorscheme
-    attr_accessor :colors_name, :information
+    attr_accessor :title, :information
 
     # A new instance of Colorscheme. If a block is given with no arguments, the
     # the block will be evaluated in the context of the new colorscheme.
     # Otherwise the block will yield self.
     #
-    # @param [String] colors_name the name of the colorscheme
+    # @param [String] title the name of the colorscheme
     # @param [Proc] block the block to be evaluated
     # @return [Colorscheme]
-    def initialize(colors_name, &block)
-      @colors_name = colors_name
+    def initialize(title, &block)
+      @title = title
       if block_given?
         block.arity == 0 ? instance_eval(&block) : yield(self)
       end
@@ -130,7 +130,7 @@ module Vic
         syntax reset
       endif
 
-      let g:colors_name="#{colors_name}"
+      let g:colors_name="#{title}"
       EOT
     end
 
