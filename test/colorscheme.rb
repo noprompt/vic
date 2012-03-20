@@ -14,6 +14,13 @@ class ColorschemeTest < Test::Unit::TestCase
     assert_equal scheme.background, 'dark'
   end
 
+  def test_raises_an_error_for_background
+    scheme = Vic::Colorscheme.new 'Alright'
+    assert_raise RuntimeError do
+      scheme.background = 'Banana'
+    end
+  end
+
   def test_updates_background
     scheme = Vic::Colorscheme.new 'Alabama'
     scheme.background

@@ -36,9 +36,11 @@ module Vic
     #
     # @param [String] a value of 'light' or 'dark'
     # @return [String] the background attribute
-    def background=(light_or_dark)
-      unless (light_or_dark =~ /^light$|^dark$/).nil?
-        @background = light_or_dark
+    def background=(setting)
+      if setting =~ /^light$|^dark$/
+        @background = setting
+      else
+        raise "background setting must be either 'light' or 'dark'"
       end
     end
 
