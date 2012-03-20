@@ -47,7 +47,7 @@ module Vic
     #
     # @return[String] the background attribute
     def background!
-      normal = highlights.find_by_group 'Normal'
+      normal = find_highlight 'Normal'
       unless normal && normal.guibg
         return @background = 'dark'
       end
