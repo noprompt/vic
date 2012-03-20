@@ -26,4 +26,10 @@ class HighlightTest < Test::Unit::TestCase
       highlight.bg = 'Beans'
     end
   end
+
+  def test_allow_none
+    highlight = Vic::Colorscheme::Highlight.new('Normal')
+    highlight.bg = 'none'
+    highlight.fg = 'none'
+  end
 end
