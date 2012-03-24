@@ -21,49 +21,49 @@ Vic is available as a Ruby gem:
 Require the file in your script or Gemfile:
 
 ```ruby
-    require 'vic'
-    gem 'vic', '~> 0.0.6'
+require 'vic'
+gem 'vic', '~> 0.0.6'
 ```
 
 Creating a new Vim color scheme is, hopefully, straight forward:
 
 ```ruby
-    # Create a new colorscheme
-    scheme = Vic::Colorscheme.new 'Alligator'
+# Create a new colorscheme
+scheme = Vic::Colorscheme.new 'Alligator'
 
-    # Add some information to the header of the file
-    scheme.info author: 'Joel Holdbrooks', URL: 'https://github.com/noprompt'
+# Add some information to the header of the file
+scheme.info author: 'Joel Holdbrooks', URL: 'https://github.com/noprompt'
 
-    # Set the background color (not necissary, see below)
-    scheme.background = 'dark'
+# Set the background color (not necissary, see below)
+scheme.background = 'dark'
 
-    # Add some highlights
-    scheme.highlight 'Normal', guibg: '#333333', guifg: '#ffffff'
+# Add some highlights
+scheme.highlight 'Normal', guibg: '#333333', guifg: '#ffffff'
 
-    # You can also use the shorthand `hi`
-    scheme.hi 'Function', guifg: '#ffffff', gui: 'bold'
+# You can also use the shorthand `hi`
+scheme.hi 'Function', guifg: '#ffffff', gui: 'bold'
 
-    # Print the colorscheme
-    puts scheme.write
+# Print the colorscheme
+puts scheme.write
 ```
 
 The above code will output:
 
 ```viml
-    " Vim color file
-    " Author: Joel Holdbrooks
-    " URL: https://github.com/noprompt
-    set background=dark
-    hi clear
+" Vim color file
+" Author: Joel Holdbrooks
+" URL: https://github.com/noprompt
+set background=dark
+hi clear
 
-    if exists("syntax_on")
-      syntax reset
-    endif
+if exists("syntax_on")
+  syntax reset
+endif
 
-    let g:colors_name="Alligator"
+let g:colors_name="Alligator"
 
-    hi Normal guifg=#ffffff guibg=#33333
-    hi Function gui=bold guifg=#ffffff
+hi Normal guifg=#ffffff guibg=#33333
+hi Function gui=bold guifg=#ffffff
 ```
 
 **Note:** You do not have to specify a background unless you want to
@@ -75,15 +75,15 @@ Alternatively, you can also write your color scheme in a block which is
 evaluated in the context of the Colorscheme object.
 
 ```ruby
-    scheme = Vic::Colorscheme.new 'Alligator' do
-      info {
-        :author => 'Joel Holdbrooks',
-        :URL    => 'https://github.com/noprompt'
-      }
+scheme = Vic::Colorscheme.new 'Alligator' do
+  info {
+    :author => 'Joel Holdbrooks',
+    :URL    => 'https://github.com/noprompt'
+  }
 
-      hi 'Normal', guibg: '#333333', guifg: '#ffffff'
-      # ...
-    end
+  hi 'Normal', guibg: '#333333', guifg: '#ffffff'
+  # ...
+end
 ```
 
 ## Shortcuts
@@ -103,7 +103,7 @@ Vim do more work?
 Consider this example:
 
 ```ruby
-      hi 'Normal', ctermbg: 59, ctermfg: 15, guifg: '#333333', guibg: '#ffffff'
+hi 'Normal', ctermbg: 59, ctermfg: 15, guifg: '#333333', guibg: '#ffffff'
 ```
 
 Now, unless you are writing a color scheme generator or just prefer Ruby code to
@@ -112,13 +112,13 @@ everything else, using Vic in this manor is almost pointless. Since version
 this:
 
 ```ruby
-      hi 'Normal', fg: '#333333', bg: '#ffffff'
+hi 'Normal', fg: '#333333', bg: '#ffffff'
 ```
 
 Produces this:
 
 ```viml
-      hi Normal ctermbg=59 ctermfg=15 guibg=#333333 guifg=#ffffff
+hi Normal ctermbg=59 ctermfg=15 guibg=#333333 guifg=#ffffff
 ```
 
 Much better, right? Of course it is! But you can be verbose if need be.
@@ -134,24 +134,24 @@ To clean things up the `Vic::Colorscheme` object provides the method `language`
 which takes a block and automatically prepends the language name for you.
 
 ```ruby
-    scheme = Vic::Colorscheme.new 'Amos Moses' do
-      hi 'Normal', guifg: '#333333', guibg: '#ffffff'
+scheme = Vic::Colorscheme.new 'Amos Moses' do
+  hi 'Normal', guifg: '#333333', guibg: '#ffffff'
 
-      language :ruby do
-        hi 'Function', gui: 'italic'
-        hi 'InstanceVariable', guifg: '#000000', gui: 'bold'
-      end
-    end
+  language :ruby do
+    hi 'Function', gui: 'italic'
+    hi 'InstanceVariable', guifg: '#000000', gui: 'bold'
+  end
+end
 
-    scheme.write
+scheme.write
 ```
 
 Which will produce the highlights:
 
 ```viml
-    hi Normal guifg=#333333 guibg=#ffffff
-    hi rubyFunction gui=italic
-    hi rubyInstanceVariable guibg=#000000 gui=bold
+hi Normal guifg=#333333 guibg=#ffffff
+hi rubyFunction gui=italic
+hi rubyInstanceVariable guibg=#000000 gui=bold
 ```
 
 Cool!
