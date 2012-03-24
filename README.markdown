@@ -1,7 +1,7 @@
 # Vic
 
 Vic, short for Vim color scheme, gives you the power of Grayskull to create Vim
-color schemes with Ruby! Yay!
+color schemes with Ruby!
 
 If Vic was a gun these would be the bullets:
 
@@ -20,11 +20,14 @@ Vic is available as a Ruby gem:
 
 Require the file in your script or Gemfile:
 
+```ruby
     require 'vic'
     gem 'vic', '~> 0.0.6'
+```
 
 Creating a new Vim color scheme is, hopefully, straight forward:
 
+```ruby
     # Create a new colorscheme
     scheme = Vic::Colorscheme.new 'Alligator'
 
@@ -42,9 +45,11 @@ Creating a new Vim color scheme is, hopefully, straight forward:
 
     # Print the colorscheme
     puts scheme.write
+```
 
 The above code will output:
 
+```viml
     " Vim color file
     " Author: Joel Holdbrooks
     " URL: https://github.com/noprompt
@@ -59,6 +64,7 @@ The above code will output:
 
     hi Normal guifg=#ffffff guibg=#33333
     hi Function gui=bold guifg=#ffffff
+```
 
 **Note:** You do not have to specify a background unless you want to
 explicitly. Vic will attempt to determine the background setting from the
@@ -68,6 +74,7 @@ automatically sets the background value to `dark`.
 Alternatively, you can also write your color scheme in a block which is
 evaluated in the context of the Colorscheme object.
 
+```ruby
     scheme = Vic::Colorscheme.new 'Alligator' do
       info {
         :author => 'Joel Holdbrooks',
@@ -77,6 +84,7 @@ evaluated in the context of the Colorscheme object.
       hi 'Normal', guibg: '#333333', guifg: '#ffffff'
       # ...
     end
+```
 
 ## Shortcuts
 
@@ -94,18 +102,24 @@ Vim do more work?
 
 Consider this example:
 
+```ruby
       hi 'Normal', ctermbg: 59, ctermfg: 15, guifg: '#333333', guibg: '#ffffff'
+```
 
 Now, unless you are writing a color scheme generator or just prefer Ruby code to
 everything else, using Vic in this manor is almost pointless. Since version
 0.0.5 the `fg` and `bg` attributes/methods are available to highlights. So
 this:
 
+```ruby
       hi 'Normal', fg: '#333333', bg: '#ffffff'
+```
 
 Produces this:
 
+```viml
       hi Normal ctermbg=59 ctermfg=15 guibg=#333333 guifg=#ffffff
+```
 
 Much better, right? Of course it is! But you can be verbose if need be.
 
@@ -119,6 +133,7 @@ highlight groups such as `rubyFunction`, `rubyBlock`, and so forth.
 To clean things up the `Vic::Colorscheme` object provides the method `language`
 which takes a block and automatically prepends the language name for you.
 
+```ruby
     scheme = Vic::Colorscheme.new 'Amos Moses' do
       hi 'Normal', guifg: '#333333', guibg: '#ffffff'
 
@@ -129,12 +144,15 @@ which takes a block and automatically prepends the language name for you.
     end
 
     scheme.write
+```
 
 Which will produce the highlights:
 
+```viml
     hi Normal guifg=#333333 guibg=#ffffff
     hi rubyFunction gui=italic
     hi rubyInstanceVariable guibg=#000000 gui=bold
+```
 
 Cool!
 
