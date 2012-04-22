@@ -60,7 +60,7 @@ puts scheme.render
 The above code will output:
 
 ```viml
-" Vim color file
+" Title: Alligator
 " Author: Joel Holdbrooks <cjholdbrooks@gmail.com>
 " URL: https://github.com/noprompt
 
