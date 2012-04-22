@@ -60,7 +60,7 @@ puts scheme.render
 The above code will output:
 
 ```viml
-" Vim color file
+" Title: Alligator
 " Author: Joel Holdbrooks <cjholdbrooks@gmail.com>
 " URL: https://github.com/noprompt
 
@@ -159,7 +159,7 @@ which takes a language name and a block. Inside the block the language name will
 be prepended to any new highlights you create.
 
 ```ruby
-scheme = Vic::Colorscheme.new 'Amos Moses' do
+scheme = Vic::ColorScheme.new 'Amos Moses' do
   hi 'Normal', guifg: '#333333', guibg: '#ffffff'
 
   language :ruby do
