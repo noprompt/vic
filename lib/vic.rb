@@ -1,11 +1,12 @@
 module Vic
-  VERSION = '0.0.6'
+  VERSION = '1.0.0'.freeze
 end
 
+require 'ostruct'
+require 'vic/color_scheme'
+require 'vic/color_scheme_writer'
 require 'vic/color'
-require 'vic/color_error'
-require 'vic/colorscheme'
-require 'vic/colorscheme/highlight'
-require 'vic/colorscheme/highlight_set'
-require 'vic/colorscheme/highlight/argument'
-require 'vic/colorscheme/highlight/argument_set'
+require 'vic/convert'
+require 'vic/xterm_color'
+require 'vic/highlight'
+require 'vic/link'
