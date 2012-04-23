@@ -37,7 +37,7 @@ module Vic
     # @api public
     def cterm?
       # A value between 0 and 255.
-      !!/\A(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\z/i.match(@value)
+      !!/\A(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\z/i.match(@value) or none?
     end
 
     # Returns true if the color value is a gui compatible color and false if
