@@ -1,9 +1,13 @@
-task :default => [:test]
-
 task :test do
   # It's nice to clear the screen first. Especially when you are running tests
   # over and over again...
-  system('clear')
+  sh 'clear'
   # Find all the ruby files in the test folder and run each of them.
-  `find ./test -name \*.rb`.split("\n").map {|testfile| ruby testfile}
+  Dir.glob("./test/*.rb").map { |testfile| ruby testfile }
+end
+
+task :install do
+  sh 'gem build vic.gemspec'
+  sh 'gem install vic-1.0.0.gem'
+  sh 'rm vic-1.0.0.gem'
 end
