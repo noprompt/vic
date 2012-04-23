@@ -7,8 +7,15 @@ If Vic was a gun these would be the bullets:
 
   * Flexible usage
   * Handy shortcuts to save you time
-  * Automatically coverts hexadecimal colors to cterm (and vice-versa)
+  * Automatic color conversion
+    * hexadecimal to cterm
+    * cterm to hexadecimal
+    * css style hexadecimal to standard
   * Dependency free
+
+## Requirements
+
+Vic is compatible with Ruby versions 1.9.2 and higher.
 
 ## Installation
 
