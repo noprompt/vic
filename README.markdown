@@ -131,21 +131,23 @@ everything else, using Vic in this manor is almost pointless. Since version
 
 ```ruby
 hi 'Normal', fg: '#333333', bg: '#ffffff'
-hi 'Function', style: %w[bold italic]
+
+# cterm colors (integers between 0 and 255) can be used as well
+hi 'Function', fg: 20, style: %w[bold italic]
 ```
 
-Produces this:
+Produces:
 
 ```viml
 hi Normal ctermbg=59 ctermfg=15 guibg=#333333 guifg=#ffffff
-hi Function cterm=bold,italic gui=bold,italic
+hi Function cterm=bold,italic ctermfg=20 gui=bold,italic guifg=#0000d7
 ```
 
 Much better, right?
 
-Of course this approach isn't perfect. Sometimes you may have to put in just
-a bit of effort to get it right by adding `ctermfg` or `ctermbg` settings
-_after_ the `fg` and `bg` settings.
+Of course this approach isn't perfect. When using hexadecimal values you may
+have to put in just a bit of effort to get it right by adding `ctermfg` or
+`ctermbg` settings _after_ the `fg` and `bg` settings.
 
 ### Languages
 
