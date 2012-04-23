@@ -1,8 +1,10 @@
 module Vic
   class Color
     def initialize(value)
-      @value = value.to_s
+      @value = value
     end
+
+    class ColorError < RuntimeError; end
 
     # Convert the color value to a hexadecimal color
     #
@@ -13,7 +15,9 @@ module Vic
     def to_gui
       return :NONE if none?
       return to_standard_hex if hexadecimal?
-      Convert.xterm_to_hex(@value.to_i)
+      return Convert.xterm_to_hex(@value) if cterm?
+
+      raise ColorError.new "can't convert \"#{ @value }\" to gui"
     end
 
     # Convert the color value to a cterm compatible color
@@ -24,8 +28,10 @@ module Vic
     # @api public
     def to_cterm
       return :NONE if none?
-      return @value.to_i if cterm?
-      Convert.hex_to_xterm(to_standard_hex)
+      return @value if cterm?
+      return Convert.hex_to_xterm(to_standard_hex) if hexadecimal?
+
+      raise ColorError.new "can't convert \"#{ @value }\" to cterm"
     end
 
     # Returns true if the color value is cterm compatible color and false if
@@ -36,8 +42,7 @@ module Vic
     #
     # @api public
     def cterm?
-      # A value between 0 and 255.
-      !!/\A(?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\z/i.match(@value) or none?
+      @value.kind_of?(Fixnum) and @value.between?(0, 255) or none?
     end
 
     # Returns true if the color value is a gui compatible color and false if
@@ -59,7 +64,7 @@ module Vic
     # @api public
     def hexadecimal?
       # Both standard and shorthand (CSS) style hexadecimal color value.
-      !!/\A#?(?:[0-9a-f]{3}|[0-9a-f]{6})\z/i.match(@value)
+      not cterm? and /\A#?(?:[0-9a-f]{3}|[0-9a-f]{6})\z/i.match(@value.to_s)
     end
 
     # Returns true if the color value is either empty or set to "NONE"
@@ -69,7 +74,7 @@ module Vic
     #
     # @api public
     def none?
-      @value.empty? or /\Anone\z/i.match(@value)
+      @value.to_s.empty? or /\Anone\z/i.match(@value.to_s)
     end
 
     private
