@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.files       = ['lib/vic.rb',
                    'lib/vic/color.rb',
                    'lib/vic/color_scheme.rb',
-                   'lib/vic/colorscheme_writer.rb',
+                   'lib/vic/color_scheme_writer.rb',
                    'lib/vic/convert.rb',
                    'lib/vic/highlight.rb',
                    'lib/vic/link.rb',
