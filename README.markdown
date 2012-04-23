@@ -89,9 +89,10 @@ hi! default link Baz Bar
 ```
 
 **Note:** You do not have to specify a background unless you want to
-explicitly. When rendering your color scheme an will be made to
+explicitly. When rendering your color scheme an attempt will be made to
 determine the background setting by checking the "Normal" highlight group's
 `guibg` value (if it exists). Otherwise the background will be set to "dark".
+Make sure you set the background manually if you do not want this behavior.
 
 Alternatively, you can also write your color scheme in a block which is
 evaluated in the context of the `ColorScheme` object.
@@ -190,7 +191,10 @@ hi rubyInstanceVariable guibg=#000000 gui=bold
 
 ## Contributing
 
-Please, please, please feel free to fork, patch, and/or point out any bad code.
+Please feel free to fork, patch, and/or point out any bad code. If you'd like
+to see a featured added, don't hesitate to ask. If you're interested in
+submitting a patch, try to follow the guidelines in this [this](http://pastebin.com/Xixb7YNW)
+style guide as best as you can.
 
 ## Thanks
 
