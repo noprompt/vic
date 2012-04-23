@@ -29,6 +29,12 @@ module Vic
       assert_equal :Baz, @colorscheme.links.last.to_group
     end
 
+    def test_it_creates_unique_links
+      @colorscheme.link :Foo, :Bar, :Baz
+      @colorscheme.link :Foo, :Bar, :Baz
+      assert_equal 2, @colorscheme.links.count
+    end
+
     def test_it_creates_forced_links
       @colorscheme.link! :Foo, :Bar
       assert @colorscheme.links.first.force?
