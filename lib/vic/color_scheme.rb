@@ -173,9 +173,7 @@ module Vic
     def link(*from_groups, to_group)
       from_groups.flatten.map do |from_group|
         # Don't add anything we don't already have.
-        next if @links.find do |l|
-          l.from_group == from_group and l.to_group == to_group
-        end
+        next if find_link(from_group, to_group)
         link = Link.new(from_group, to_group)
         link.tap { |l| @links << l }
       end.compact
@@ -206,9 +204,7 @@ module Vic
 
       # Then update the links.
       from_groups.flatten.map do |from_group|
-        link = @links.find do |l|
-          l.from_group == from_group and l.to_group == to_group
-        end
+        link = find_link(from_group, to_group)
         link.tap(&:force!)
       end
     end
@@ -283,7 +279,25 @@ module Vic
     #
     # @api private
     def find_highlight(group)
-      highlights.find { |h| /\A#{ group }\z/.match h.group }
+      highlights.find { |h| /\A#{ group }\z/.match(h.group) }
+    end
+
+    # Find a link
+    #
+    # @param [String,Symbol] from_group
+    #   the link from_group
+    #
+    # @param [String,Symbol] to_group
+    #   the link to_group
+    #
+    # @return [NilClass,Vic::Highlight]
+    #   the found highlight
+    #
+    # @api private
+    def find_link(from_group, to_group)
+      @links.find do |l|
+        /\A#{ from_group }\z/.match(l.from_group) and /\A#{ to_group }\z/.match(l.to_group)
+      end
     end
   end # class ColorScheme
 end # module Vic
