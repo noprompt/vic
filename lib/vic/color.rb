@@ -18,7 +18,7 @@ module Vic
 
     # Convert the color value to a cterm compatible color
     #
-    # @return [Symbol,String]
+    # @return [Fixnum]
     #   the color as either "NONE" or cterm color
     #
     # @api public
