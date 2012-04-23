@@ -24,7 +24,7 @@ module Vic
     # @api public
     def to_cterm
       return :NONE if none?
-      return @value if cterm?
+      return @value.to_i if cterm?
       Convert.hex_to_xterm(to_standard_hex)
     end
 
