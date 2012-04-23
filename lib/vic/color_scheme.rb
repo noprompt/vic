@@ -166,7 +166,7 @@ module Vic
     # @param [String,Symbol] to_groups
     #   the group to link to
     #
-    # @retun [Array]
+    # @return [Array]
     #   the added links
     #
     # @api public
@@ -196,7 +196,7 @@ module Vic
     # @param [String,Symbol] to_groups
     #   the group to link to
     #
-    # @retun [Array]
+    # @return [Array]
     #   the added/updated links
     #
     # @api public
