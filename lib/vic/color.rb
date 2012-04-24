@@ -15,8 +15,8 @@ module Vic
     #
     # @api public
     def to_gui
-      return :NONE if none?
       return to_standard_hex if hexadecimal?
+      return :NONE if none?
       return Convert.xterm_to_hex(@value) if cterm?
 
       raise ColorError.new "can't convert \"#{ @value }\" to gui"
