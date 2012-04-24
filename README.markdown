@@ -85,7 +85,7 @@ endif
 
 let g:colors_name="Alligator"
 
-hi Normal guifg=#ffffff guibg=#33333
+hi Normal guifg=#ffffff guibg=#333333
 hi Function gui=bold guifg=#ffffff
 hi! rubyClassVariable gui=bold
 hi link Foo Bar
