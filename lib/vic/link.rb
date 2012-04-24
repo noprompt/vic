@@ -18,7 +18,7 @@ module Vic
     #
     # @api public
     def force=(bool)
-      @force = !! bool
+      @force = !!bool
     end
 
     # Return the force setting
