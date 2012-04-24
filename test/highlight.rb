@@ -38,10 +38,10 @@ module Vic
     end
 
     def test_it_raises_an_error
-      assert_raises(ArgumentError) { @highlight.ctermbg = 'lol' }
-      assert_raises(ArgumentError) { @highlight.ctermfg = 'omg' }
-      assert_raises(ArgumentError) { @highlight.guibg = 'hai' }
-      assert_raises(ArgumentError) { @highlight.guifg = 'bai' }
+      assert_raises(Vic::Color::ColorError) { @highlight.ctermbg = 'lol' }
+      assert_raises(Vic::Color::ColorError) { @highlight.ctermfg = 'omg' }
+      assert_raises(Vic::Color::ColorError) { @highlight.guibg = 'hai' }
+      assert_raises(Vic::Color::ColorError) { @highlight.guifg = 'bai' }
     end
   end # class TestHighlight
 end # module Vic
