@@ -66,7 +66,7 @@ module Vic
     # @api public
     def hexadecimal?
       # Both standard and shorthand (CSS) style hexadecimal color value.
-      not cterm? and /\A#?(?:[0-9a-f]{3}|[0-9a-f]{6})\z/i.match(@value.to_s)
+      not cterm? and /\A#?(?:[0-9a-f]{3}|[0-9a-f]{6})\z/io.match(@value.to_s)
     end
 
     # Returns true if the color value is either empty or set to "NONE"
@@ -76,7 +76,7 @@ module Vic
     #
     # @api public
     def none?
-      @value.to_s.empty? or /\Anone\z/i.match(@value.to_s)
+      @value.to_s.empty? or /\Anone\z/io.match(@value.to_s)
     end
 
     private
