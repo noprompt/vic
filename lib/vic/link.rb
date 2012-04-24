@@ -40,5 +40,5 @@ module Vic
     def force!
       @force = true
     end
-  end # class Linke
+  end # class Link
 end # module Vic
