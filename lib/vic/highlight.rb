@@ -129,7 +129,7 @@ module Vic
     # @param [Array,String,Symbol] styles
     #   the styles to use
     #
-    # @return [Array,String,Symbol]
+    # @return [Array,Symbol]
     #   the cterm value
     #
     # @api public
@@ -171,7 +171,7 @@ module Vic
     # @param [Array,String,Symbol] styles
     #   the styles to use
     #
-    # @return [Array,Symbol,Symbol]
+    # @return [Array,Symbol]
     #   the gui value
     #
     # @api public
@@ -215,12 +215,16 @@ module Vic
     # @param [Mixed] styles
     #   the list of styles
     #
-    # @return [Array]
-    #   the list of valid styles
+    # @return [Array,Symbol]
+    #   the list of valid styles or "NONE"
     #
     # @api private
     def select_styles(*styles)
-      styles.flatten.select { |s| FONT_STYLE.match(s) }
+      styles.tap(&:compact).flatten!
+      if styles.empty? or styles.length == 1 && /\Anone\z/io.match(styles[0])
+        return :NONE
+      end
+      styles.select { |s| FONT_STYLE.match(s) }
     end
   end # class Highlight
 end # module Vic

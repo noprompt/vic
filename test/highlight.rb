@@ -35,6 +35,14 @@ module Vic
       @highlight.style = 'bold', 'italic'
       assert_equal ['bold', 'italic'], @highlight.cterm
       assert_equal ['bold', 'italic'], @highlight.gui
+
+      @highlight.style = 'none'
+      assert_equal :NONE, @highlight.cterm
+      assert_equal :NONE, @highlight.gui
+
+      @highlight.style = []
+      assert_equal :NONE, @highlight.cterm
+      assert_equal :NONE, @highlight.gui
     end
 
     def test_it_raises_an_error
