@@ -16,8 +16,8 @@ module Vic
     # @api public
     def to_gui
       return to_standard_hex if hexadecimal?
-      return :NONE if none?
       return Convert.xterm_to_hex(@value) if cterm?
+      return :NONE if none?
 
       raise ColorError.new "can't convert \"#{ @value }\" to gui"
     end
@@ -29,9 +29,9 @@ module Vic
     #
     # @api public
     def to_cterm
-      return :NONE if none?
       return @value if cterm?
       return Convert.hex_to_xterm(to_standard_hex) if hexadecimal?
+      return :NONE if none?
 
       raise ColorError.new "can't convert \"#{ @value }\" to cterm"
     end
@@ -44,7 +44,7 @@ module Vic
     #
     # @api public
     def cterm?
-      @value.kind_of?(Fixnum) and @value.between?(0, 255) or none?
+      @value.kind_of?(Fixnum) and @value.between?(0, 255)
     end
 
     # Returns true if the color value is a gui compatible color and false if
@@ -55,7 +55,7 @@ module Vic
     #
     # @api public
     def gui?
-      hexadecimal? or none?
+      hexadecimal?
     end
 
     # Returns true if the color value is a hexadecimal color and false if it's not

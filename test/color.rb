@@ -30,8 +30,6 @@ module Vic
 
       color = Color.new('NONE')
       assert color.none?
-      assert color.cterm?
-      assert color.gui?
     end
 
     def test_it_converts_to_standard_hex
