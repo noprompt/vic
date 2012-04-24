@@ -6,11 +6,12 @@ with Ruby!
 If Vic was a gun these would be the bullets:
 
   * Flexible usage
-  * Handy shortcuts to save you time
+  * Handy shortcuts
   * Automatic color conversion
     * hexadecimal to cterm
     * cterm to hexadecimal
     * css style hexadecimal to standard
+  * Syntax is close to Vim
   * Dependency free
 
 ## Requirements
@@ -23,25 +24,28 @@ Vic is available as a Ruby gem:
 
     $ gem install vic
 
+Or alternatively:
+
+    $ git clone https://github.com/noprompt/vic.git vic
+    $ cd vic
+    $ rake install
+
 ## Usage
 
-Require the file in your script or Gemfile:
+Creating a new Vim color scheme using Vic is so simple.
 
 ```ruby
+# Require the file in your script.
 require 'vic'
 
+# or Gemfile.
 gem 'vic', '~> 1.0.0'
-```
 
-Creating a new Vim color scheme using Vic is, as my data structures professor
-would say, so simple:
-
-```ruby
-# Create a new color scheme.
+# Create a new color scheme with the title "Alligator".
 scheme = Vic::ColorScheme.new 'Alligator'
 
 # Add some information to the header of the file.
-scheme.add_info Author: 'Joel Holdbrooks <cjholdbrooks@gmail.com>'
+scheme.add_info Author: 'Joel Holdbrooks'
 scheme.add_info URL: 'https://github.com/noprompt'
 
 # Set the background color (not always necessary, see below).
@@ -50,7 +54,7 @@ scheme.background = 'dark'
 # Add some highlights (gui hexadecimal colors can be shorthand or standard).
 scheme.highlight 'Normal', guibg: '#333', guifg: '#ffffff'
 
-# You can also use the shorthand `hi`.
+# You can also use the shorthand `hi` (as with Vim).
 scheme.hi 'Function', guifg: '#fff', gui: 'bold'
 
 # Or create forced highlights using `hi!` (`highlight!` works too).
@@ -68,7 +72,7 @@ The above code will output:
 
 ```viml
 " Title: Alligator
-" Author: Joel Holdbrooks <cjholdbrooks@gmail.com>
+" Author: Joel Holdbrooks
 " URL: https://github.com/noprompt
 
 set background=dark
@@ -88,22 +92,21 @@ hi link Foo Bar
 hi! default link Baz Bar
 ```
 
-**Note:** You do not have to specify a background unless you want to
-explicitly. When rendering your color scheme an attempt will be made to
-determine the background setting by checking the "Normal" highlight group's
-`guibg` value (if it exists). Otherwise the background will be set to "dark".
-Make sure you set the background manually if you do not want this behavior.
+Easy right? Yeah, it's a pretty lousy theme but trust me I didn't write this
+thing to make "pretty lousy" themes.
 
-Alternatively, you can also write your color scheme in a block which is
-evaluated in the context of the `ColorScheme` object.
+Alternatively, you can also write your color scheme in a block like so:
 
 ```ruby
-scheme = Vic::ColorScheme.new 'Alligator' do
-  add_info Author: 'Joel Holdbrooks <cjholdbrooks@gmail.com>'
-  add_info URL: 'https://github.com/noprompt'
+Vic::ColorScheme.new 'Alligator' do
+  add_info Author: 'Joel Holdbrooks'
 
-  # Forgot to mention you can also drop the "#" from hexadecimal colors too.
-  hi! 'Normal', guibg: '333', guifg: 'fff'
+  # ...
+end
+
+Vic::ColorScheme.new 'Alligator' do |s|
+  s.add_info Author: 'Joel Holdbrooks'
+
   # ...
 end
 ```
@@ -115,9 +118,19 @@ Making sure it looks great in the gui and in the terminal is a lot of hard
 work.
 
 Vic attempts to take the edge off and allow the theme developer to focus on what's
-really important - building a great theme without a ton of effort.
+really important - building a theme with minimal effort.
 
-### Automatic color conversion
+### The background
+
+You might have noticed a comment up there about the background setting - you
+don't need to worry about it (most of the time). When Vic renders your color
+scheme an attempt is made to determine the background setting. Vic checks to see
+if you've added a highlight for the group "Normal". If you did and it has a
+`guibg` value it'll figure it out. Otherwise the background will be set to
+"dark". If you don't want this sort of behavior, or trust that it works, be sure
+to set it manually.
+
+### Automatic color conversion and style (aka why you'd probably wanna use this)
 
 When it comes to handcrafting color schemes in Vim, a notable annoyance is
 converting hexadecimal colors to their 256 color counterpart. Sure, there are
@@ -128,19 +141,29 @@ something extra just to get your theme to work in the terminal?
 Consider this example:
 
 ```ruby
+# Assuming we're inside a block.
 hi 'Normal', ctermbg: 59, ctermfg: 15, guifg: '#333333', guibg: '#ffffff'
 hi 'Function', cterm: 'bold', gui: 'bold'
 ```
 
-Now, unless you are writing a color scheme generator or just prefer Ruby code to
-everything else, using Vic in this manor is almost pointless. Since version
-0.0.5 the dual purpose `fg` and `bg` methods are available to highlights, and
-`style` since version 1.0.0. So this:
+It doesn't have to be this way.
+
+Since version 0.0.5 highlights posess the dual purpose `fg` and `bg`, and `style`
+since version 1.0.0. These allow you to set both cterm and gui attributes
+simultaneously.
+
+`fg` and `bg` will accept any valid cterm or hexadecimal color and convert it
+automatically to its counterpart. Cterm colors are *integer* values between
+0 and 255. Hexadecimal colors can be in standard or css style formats optionally
+with a leading "#".
+
+`style` accepts a value of "NONE" or a mix of the following: `bold`, `underline`,
+`undercurl`, `reverse`, `inverse`, `italic`, or `standout`.
+
+For example:
 
 ```ruby
-hi 'Normal', fg: '#333333', bg: '#ffffff'
-
-# cterm colors (integers between 0 and 255) can be used as well
+hi 'Normal', fg: '333', bg: 'fff'
 hi 'Function', fg: 20, style: %w[bold italic]
 ```
 
@@ -151,9 +174,9 @@ hi Normal ctermbg=59 ctermfg=15 guibg=#333333 guifg=#ffffff
 hi Function cterm=bold,italic ctermfg=20 gui=bold,italic guifg=#0000d7
 ```
 
-Much better, right?
+Much better, right? I hope so.
 
-Of course this approach isn't perfect. When using hexadecimal values you may
+Of course, this approach isn't perfect. When using hexadecimal values you may
 have to put in just a bit of effort to get it right by adding `ctermfg` or
 `ctermbg` settings _after_ the `fg` and `bg` settings.
 
@@ -164,37 +187,33 @@ specific language. To do this you prepend the language name to the highlight
 group. In the case of Ruby your color scheme might have highlight groups such as
 `rubyFunction`, `rubyBlock`, and so forth.
 
-To clean things up the `Vic::ColorScheme` object provides the method `language`
+To dry things up the `Vic::ColorScheme` object provides the method `language`
 which takes a language name and a block. Inside the block the language name will
 be prepended to any new highlights you create.
 
 ```ruby
-scheme = Vic::ColorScheme.new 'Amos Moses' do
-  hi 'Normal', guifg: '#333333', guibg: '#ffffff'
-
-  language :ruby do
-    hi 'Function', gui: 'italic'
-    hi 'InstanceVariable', guifg: '#000000', gui: 'bold'
-  end
+# Assuming we're in a block.
+language :ruby do
+  hi 'Function', gui: 'italic'
+  hi 'InstanceVariable', guifg: '#000000', gui: 'bold'
 end
-
-scheme.write
 ```
 
-Will produce the highlights:
+Will produce:
 
 ```viml
-hi Normal guifg=#333333 guibg=#ffffff
 hi rubyFunction gui=italic
-hi rubyInstanceVariable guibg=#000000 gui=bold
+hi rubyInstanceVariable gui=bold guibg=#000000
 ```
+
+See? So simple.
 
 ## Contributing
 
-Please feel free to fork, patch, and/or point out any bad code. If you'd like
-to see a featured added, don't hesitate to ask. If you're interested in
-submitting a patch, try to follow the guidelines in this [this](http://pastebin.com/Xixb7YNW)
-style guide as best as you can.
+Please feel free to fork, patch, and/or point out any questionable code. If
+you'd like to see a featured added, don't hesitate to ask. If you're interested
+in submitting a patch, try to follow the guidelines in this [this](http://pastebin.com/Xixb7YNW)
+style guide as best as you can and write tests.
 
 ## Thanks
 
