@@ -126,7 +126,7 @@ You might have noticed a comment up there about the background setting - you
 don't need to worry about it (most of the time). When Vic renders your color
 scheme an attempt is made to determine the background setting. Vic checks to see
 if you've added a highlight for the group "Normal". If you did and it has a
-`guibg` value it'll figure it out. Otherwise the background will be set to
+`guibg` value, it'll figure it out. Otherwise the background will be set to
 "dark". If you don't want this sort of behavior, or trust that it works, be sure
 to set it manually.
 
@@ -153,11 +153,11 @@ since version 1.0.0. These allow you to set both cterm and gui attributes
 simultaneously.
 
 `fg` and `bg` will accept any valid cterm or hexadecimal color and convert it
-automatically to its counterpart. Cterm colors are *integer* values between
+automatically to its counterpart. Cterm colors are **integer** values between
 0 and 255. Hexadecimal colors can be in standard or css style formats optionally
 with a leading "#".
 
-`style` accepts a value of "NONE" or a mix of the following: `bold`, `underline`,
+`style` accepts a value of `"NONE"` or a mix of the following: `bold`, `underline`,
 `undercurl`, `reverse`, `inverse`, `italic`, or `standout`.
 
 For example:
