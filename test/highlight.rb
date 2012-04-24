@@ -1,6 +1,4 @@
-$:.unshift File.expand_path('../../lib', __FILE__)
-require 'minitest/autorun'
-require 'vic'
+require File.expand_path('../test_helper', __FILE__)
 
 module Vic
   class TestHighlight < MiniTest::Unit::TestCase

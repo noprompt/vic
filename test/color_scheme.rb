@@ -1,6 +1,4 @@
-$:.unshift File.expand_path('../../lib', __FILE__)
-require 'minitest/autorun'
-require 'vic'
+require File.expand_path('../test_helper', __FILE__)
 
 module Vic
   class TestColorScheme < MiniTest::Unit::TestCase
@@ -64,37 +62,7 @@ module Vic
       assert_equal :Normal, @colorscheme.highlights[3].group
     end
 
-    def test_it_renders_a_colorscheme
-      @colorscheme.info = { Author: 'Joel Holdbrooks <cjholdbrooks@gmail.com>', URI: 'http://github.com/noprompt' }
-      @colorscheme.hi! :Normal, bg: 'fff', fg: '000'
-      @colorscheme.hi! :Foo, style: %w(bold italic)
-      @colorscheme.link! :Bar, :Baz, :Quux
-
-      result = <<-VIML.gsub(/^ {6}/, '').chomp
-      " Title: Alabama
-      " Author: Joel Holdbrooks <cjholdbrooks@gmail.com>
-      " URI: http://github.com/noprompt
-
-      set background=light
-
-      hi clear
-
-      if exists("syntax_on")
-        syntax reset
-      endif
-
-      let g:colors_name="Alabama"
-
-      hi! Normal ctermbg=15 ctermfg=0 guibg=#ffffff guifg=#000000
-      hi! Foo cterm=bold,italic gui=bold,italic
-      hi! default link Bar Quux
-      hi! default link Baz Quux
-      VIML
-
-      assert_equal result, @colorscheme.render
-    end
-
-    def test_it_renders_a_colorscheme_in_a_block
+    def test_it_renders_a_colorscheme_created_in_a_block
       colorscheme = Vic::ColorScheme.new 'Alabama' do
         add_info Author: 'Joel Holdbrooks <cjholdbrooks@gmail.com>'
         add_info URI: 'http://github.com/noprompt'
@@ -126,6 +94,5 @@ module Vic
 
       assert_equal result, colorscheme.render
     end
-
   end # class TestColorscheme
 end # module Vic

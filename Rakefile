@@ -3,7 +3,7 @@ task :test do
   # over and over again...
   sh 'clear'
   # Find all the ruby files in the test folder and run each of them.
-  Dir.glob("./test/*.rb").map { |testfile| ruby testfile }
+  Dir.glob("./test/*.rb").reject { |f| f.match(/helper/) }.map { |f| ruby f }
 end
 
 task :install do
