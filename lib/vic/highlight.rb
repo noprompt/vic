@@ -212,7 +212,7 @@ module Vic
 
     # Selcect valid styles from a list
     #
-    # @param [Mixed] styles
+    # @param [Array,String,Symbol] styles
     #   the list of styles
     #
     # @return [Array,Symbol]
